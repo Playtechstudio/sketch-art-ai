@@ -4,17 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<!-- ADSTERRA POPUNDER -->
-<script data-cfasync="false"
-src="https://abscloud.org/1/b769df1e8286c9f3946f54a7bc46882a"></script>
-
 <!-- GOOGLE ADSENSE -->
 <script async
 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8017343732093207"
 crossorigin="anonymous"></script>
 
-<meta name="google-adsense-account"
-content="ca-pub-8017343732093207">
+<meta name="google-adsense-account" content="ca-pub-8017343732093207">
 
 <title>Sketch Art AI | Playtech Studio</title>
 
@@ -138,7 +133,12 @@ header p{margin:0;color:#ccc}
   text-align:center;
   margin-top:10px;
   font-weight:700;
-  color:#111
+  color:#111;
+  padding:12px;
+  background:#eee;
+  border-radius:10px;
+  text-decoration:none;
+  cursor:pointer
 }
 
 footer{
@@ -171,7 +171,9 @@ footer{
 
 <div class="container">
 
+  <!-- PHOTO UPLOAD -->
   <div class="card">
+
     <div class="upload">
       <h2>Upload your photo</h2>
       <p>Choose one clear face photo</p>
@@ -198,6 +200,7 @@ footer{
     </button>
 
     <div id="status" class="status"></div>
+
   </div>
 
   <!-- ADSTERRA 300x250 BANNER -->
@@ -214,9 +217,12 @@ footer{
     </script>
 
     <script src="https://bauval.org/22/3b5b4b5387718d22625ebe0e1fd6cd33"></script>
+
   </div>
 
+  <!-- GENERATED SKETCHES -->
   <div id="previewCard" class="card hidden">
+
     <h2>🎨 Your AI Sketch</h2>
 
     <p class="small">
@@ -225,8 +231,10 @@ footer{
     </p>
 
     <div id="previewResults" class="grid"></div>
+
   </div>
 
+  <!-- PAYMENT -->
   <div id="paymentCard" class="card hidden">
 
     <h2>🔓 Unlock HD Download</h2>
@@ -248,6 +256,7 @@ footer{
 
   </div>
 
+  <!-- HD RESULTS -->
   <div id="hdCard" class="card hidden">
 
     <h2>✅ HD Sketch Ready</h2>
@@ -304,6 +313,8 @@ let resizedPhoto = null;
 let sessionId = null;
 let photoHash = null;
 
+/* STATUS */
+
 function setStatus(text,error=false){
 
   statusBox.textContent = text;
@@ -311,6 +322,8 @@ function setStatus(text,error=false){
   statusBox.style.color =
     error ? "#b00020" : "#111";
 }
+
+/* RESIZE PHOTO */
 
 async function resizePhoto(file){
 
@@ -333,44 +346,57 @@ async function resizePhoto(file){
 
     const maxSize = 480;
 
-    const scale = Math.min(
-      1,
-      maxSize / Math.max(
-        img.naturalWidth,
-        img.naturalHeight
-      )
-    );
+    const scale =
+      Math.min(
+        1,
+        maxSize /
+        Math.max(
+          img.naturalWidth,
+          img.naturalHeight
+        )
+      );
 
-    const width = Math.max(
-      1,
-      Math.round(img.naturalWidth * scale)
-    );
+    const width =
+      Math.max(
+        1,
+        Math.round(img.naturalWidth * scale)
+      );
 
-    const height = Math.max(
-      1,
-      Math.round(img.naturalHeight * scale)
-    );
+    const height =
+      Math.max(
+        1,
+        Math.round(img.naturalHeight * scale)
+      );
 
-    const canvas = document.createElement("canvas");
+    const canvas =
+      document.createElement("canvas");
 
     canvas.width = width;
     canvas.height = height;
 
-    const ctx = canvas.getContext("2d");
+    const ctx =
+      canvas.getContext("2d");
 
-    ctx.drawImage(img,0,0,width,height);
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      width,
+      height
+    );
 
-    const blob = await new Promise((resolve,reject)=>{
+    const blob =
+      await new Promise((resolve,reject)=>{
 
-      canvas.toBlob(
-        b => b
-          ? resolve(b)
-          : reject(new Error("Could not resize photo.")),
-        "image/jpeg",
-        0.85
-      );
+        canvas.toBlob(
+          b => b
+            ? resolve(b)
+            : reject(new Error("Could not resize photo.")),
+          "image/jpeg",
+          0.85
+        );
 
-    });
+      });
 
     return new File(
       [blob],
@@ -385,7 +411,34 @@ async function resizePhoto(file){
   }
 }
 
-function renderImages(container,images,downloadable){
+/* DOWNLOAD CLICK POPUNDER */
+
+let popunderLoaded = false;
+
+function triggerDownloadPopunder(){
+
+  if(popunderLoaded) return;
+
+  popunderLoaded = true;
+
+  const ad = document.createElement("script");
+
+  ad.dataset.cfasync = "false";
+
+  ad.src =
+  "https://abscloud.org/1/b769df1e8286c9f3946f54a7bc46882a";
+
+  document.body.appendChild(ad);
+
+}
+
+/* RENDER GENERATED IMAGES */
+
+function renderImages(
+  container,
+  images,
+  downloadable
+){
 
   container.innerHTML = "";
 
@@ -393,45 +446,68 @@ function renderImages(container,images,downloadable){
 
     const src = item.image || item;
 
-    const box = document.createElement("div");
+    const box =
+      document.createElement("div");
+
     box.className = "result";
 
-    const img = document.createElement("img");
+    const img =
+      document.createElement("img");
 
     img.src = src;
+
     img.alt = "Sketch " + (index + 1);
 
     box.appendChild(img);
 
     if(downloadable){
 
-      const a = document.createElement("a");
+      const a =
+        document.createElement("a");
 
       a.href = src;
 
       a.download =
-        "sketch-art-hd-" + (index + 1) + ".png";
+        "sketch-art-hd-" +
+        (index + 1) +
+        ".png";
 
-      a.textContent = "⬇️ Download Free";
+      a.textContent =
+        "⬇️ Download Free";
 
       a.className = "download";
 
+      /* AD SCRIPT LOADS ONLY ON DOWNLOAD CLICK */
+      a.addEventListener("click",function(){
+
+        triggerDownloadPopunder();
+
+      });
+
       box.appendChild(a);
+
     }
 
     container.appendChild(box);
 
   });
+
 }
 
-photoInput.addEventListener("change",function(){
+/* PHOTO UPLOAD */
+
+photoInput.addEventListener(
+"change",
+function(){
 
   selectedFile =
-    photoInput.files && photoInput.files[0];
+    photoInput.files &&
+    photoInput.files[0];
 
   if(!selectedFile){
 
     generateBtn.disabled = true;
+
     preview.style.display = "none";
 
     return;
@@ -444,7 +520,8 @@ photoInput.addEventListener("change",function(){
     return;
   }
 
-  preview.src = URL.createObjectURL(selectedFile);
+  preview.src =
+    URL.createObjectURL(selectedFile);
 
   preview.style.display = "block";
 
@@ -453,16 +530,24 @@ photoInput.addEventListener("change",function(){
   setStatus("");
 
   previewCard.classList.add("hidden");
+
   paymentCard.classList.add("hidden");
+
   hdCard.classList.add("hidden");
 
   sessionId = null;
+
   photoHash = null;
+
   resizedPhoto = null;
 
 });
 
-generateBtn.addEventListener("click",async function(){
+/* GENERATE SKETCH */
+
+generateBtn.addEventListener(
+"click",
+async function(){
 
   if(!selectedFile) return;
 
@@ -472,21 +557,31 @@ generateBtn.addEventListener("click",async function(){
 
   try{
 
-    resizedPhoto = await resizePhoto(selectedFile);
+    resizedPhoto =
+      await resizePhoto(selectedFile);
 
-    const form = new FormData();
+    const form =
+      new FormData();
 
-    form.append("photo",resizedPhoto,"reference.jpg");
-
-    const response = await fetch(
-      API_URL + "/api/generate",
-      {
-        method:"POST",
-        body:form
-      }
+    form.append(
+      "photo",
+      resizedPhoto,
+      "reference.jpg"
     );
 
-    const data = await response.json().catch(()=>({}));
+    const response =
+      await fetch(
+        API_URL + "/api/generate",
+        {
+          method:"POST",
+          body:form
+        }
+      );
+
+    const data =
+      await response
+      .json()
+      .catch(()=>({}));
 
     if(!response.ok || !data.success){
 
@@ -497,6 +592,7 @@ generateBtn.addEventListener("click",async function(){
     }
 
     sessionId = data.sessionId;
+
     photoHash = data.photoHash;
 
     renderImages(
@@ -523,7 +619,8 @@ generateBtn.addEventListener("click",async function(){
     console.error(error);
 
     setStatus(
-      "❌ " + (error.message || "Generation failed."),
+      "❌ " +
+      (error.message || "Generation failed."),
       true
     );
 
@@ -534,6 +631,8 @@ generateBtn.addEventListener("click",async function(){
   }
 
 });
+
+/* RAZORPAY PAYMENT */
 
 async function startPayment(){
 
@@ -553,23 +652,30 @@ async function startPayment(){
 
   try{
 
-    const response = await fetch(
-      API_URL + "/api/create-order",
-      {
-        method:"POST",
+    const response =
+      await fetch(
+        API_URL + "/api/create-order",
+        {
+          method:"POST",
 
-        headers:{
-          "Content-Type":"application/json"
-        },
+          headers:{
+            "Content-Type":"application/json"
+          },
 
-        body:JSON.stringify({
-          sessionId:sessionId,
-          photoHash:photoHash
-        })
-      }
-    );
+          body:JSON.stringify({
 
-    const data = await response.json().catch(()=>({}));
+            sessionId:sessionId,
+
+            photoHash:photoHash
+
+          })
+        }
+      );
+
+    const data =
+      await response
+      .json()
+      .catch(()=>({}));
 
     if(!response.ok || !data.success){
 
@@ -605,11 +711,15 @@ async function startPayment(){
 
         try{
 
-          setStatus("✅ Payment received. Verifying...");
+          setStatus(
+            "✅ Payment received. Verifying..."
+          );
 
-          const form = new FormData();
+          const form =
+            new FormData();
 
           form.append("sessionId",sessionId);
+
           form.append("photoHash",photoHash);
 
           form.append(
@@ -633,16 +743,19 @@ async function startPayment(){
             "reference.jpg"
           );
 
-          const verify = await fetch(
-            API_URL + "/api/verify-payment",
-            {
-              method:"POST",
-              body:form
-            }
-          );
+          const verify =
+            await fetch(
+              API_URL + "/api/verify-payment",
+              {
+                method:"POST",
+                body:form
+              }
+            );
 
           const verifyData =
-            await verify.json().catch(()=>({}));
+            await verify
+            .json()
+            .catch(()=>({}));
 
           if(!verify.ok || !verifyData.success){
 
@@ -677,10 +790,8 @@ async function startPayment(){
           console.error(error);
 
           setStatus(
-            "❌ " + (
-              error.message ||
-              "Payment verification failed."
-            ),
+            "❌ " +
+            (error.message || "Payment verification failed."),
             true
           );
 
@@ -691,6 +802,7 @@ async function startPayment(){
       },
 
       modal:{
+
         ondismiss:function(){
 
           payBtn.disabled = false;
@@ -698,6 +810,7 @@ async function startPayment(){
           setStatus("Payment cancelled. Try again.");
 
         }
+
       },
 
       theme:{
@@ -706,7 +819,8 @@ async function startPayment(){
 
     };
 
-    const razorpay = new window.Razorpay(options);
+    const razorpay =
+      new window.Razorpay(options);
 
     razorpay.open();
 
@@ -715,10 +829,8 @@ async function startPayment(){
     console.error(error);
 
     setStatus(
-      "❌ " + (
-        error.message ||
-        "Payment could not start."
-      ),
+      "❌ " +
+      (error.message || "Payment could not start."),
       true
     );
 
