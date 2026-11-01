@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<!-- GOOGLE ADSENSE -->
 <script async
 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8017343732093207"
 crossorigin="anonymous"></script>
@@ -17,30 +16,25 @@ crossorigin="anonymous"></script>
 
 <style>
 *{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f4f4f4;
   color:#111
 }
-
 header{
   background:#111;
   color:white;
   text-align:center;
   padding:24px 15px
 }
-
 header h1{margin:0 0 8px}
 header p{margin:0;color:#ccc}
-
 .container{
   max-width:900px;
   margin:28px auto;
   padding:0 16px
 }
-
 .card{
   background:white;
   border-radius:18px;
@@ -48,19 +42,16 @@ header p{margin:0;color:#ccc}
   margin-bottom:20px;
   box-shadow:0 4px 20px rgba(0,0,0,.08)
 }
-
 .upload{
   text-align:center;
   border:2px dashed #aaa;
   border-radius:15px;
   padding:22px
 }
-
 .upload input{
   width:100%;
   padding:12px
 }
-
 .preview{
   display:none;
   width:100%;
@@ -70,7 +61,6 @@ header p{margin:0;color:#ccc}
   margin:18px auto;
   border-radius:12px
 }
-
 .btn{
   width:100%;
   padding:15px;
@@ -83,71 +73,59 @@ header p{margin:0;color:#ccc}
   cursor:pointer;
   margin-top:15px
 }
-
 .btn:disabled{
   opacity:.5;
   cursor:not-allowed
 }
-
 .status{
   text-align:center;
   margin:18px 0;
   font-weight:700;
   min-height:24px
 }
-
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:16px
 }
-
 .result{
   background:#f7f7f7;
   border-radius:14px;
   padding:10px
 }
-
 .result img{
   width:100%;
   display:block;
   border-radius:10px
 }
-
+.result h3{
+  text-align:center;
+  font-size:15px
+}
 .price{
   text-align:center;
   font-size:30px;
   font-weight:800
 }
-
 .small{
   text-align:center;
   color:#666;
   font-size:14px
 }
-
 .hidden{display:none}
-
 .download{
   display:block;
   text-align:center;
   margin-top:10px;
   font-weight:700;
-  color:#111;
-  padding:12px;
-  background:#eee;
-  border-radius:10px;
-  text-decoration:none;
-  cursor:pointer
+  color:#111
 }
-
 footer{
   text-align:center;
   padding:30px;
   color:#777;
   font-size:13px
 }
-
 @media(max-width:600px){
   .grid{grid-template-columns:1fr}
 }
@@ -159,21 +137,18 @@ footer{
 <header>
   <h1>✏️ Sketch Art AI</h1>
   <p>Turn your photo into professional AI sketch art</p>
-  <p style="margin-top:10px">PLAYTECH STUDIO</p>
+  <p>PLAYTECH STUDIO</p>
 </header>
 
-<!-- ADSTERRA NATIVE BANNER -->
+<!-- Adsterra Native Banner -->
 <div style="max-width:900px;margin:18px auto;text-align:center;padding:0 16px;">
-  <script async="async" data-cfasync="false"
-  src="https://bauval.org/21/bab192826c05df5601b336580b0fa527"></script>
+  <script async="async" data-cfasync="false" src="https://bauval.org/21/bab192826c05df5601b336580b0fa527"></script>
   <div id="container-bab192826c05df5601b336580b0fa527"></div>
 </div>
 
 <div class="container">
 
-  <!-- PHOTO UPLOAD -->
   <div class="card">
-
     <div class="upload">
       <h2>Upload your photo</h2>
       <p>Choose one clear face photo</p>
@@ -200,12 +175,10 @@ footer{
     </button>
 
     <div id="status" class="status"></div>
-
   </div>
 
-  <!-- ADSTERRA 300x250 BANNER -->
+  <!-- Adsterra 300x250 Banner -->
   <div style="width:100%;max-width:300px;min-height:250px;margin:24px auto;text-align:center;overflow:hidden;">
-
     <script>
       atOptions = {
         'key' : '3b5b4b5387718d22625ebe0e1fd6cd33',
@@ -215,36 +188,23 @@ footer{
         'params' : {}
       };
     </script>
-
     <script src="https://bauval.org/22/3b5b4b5387718d22625ebe0e1fd6cd33"></script>
-
   </div>
 
-  <!-- GENERATED SKETCHES -->
   <div id="previewCard" class="card hidden">
-
     <h2>🎨 Your AI Sketch</h2>
-
     <p class="small">
-      Your AI sketches are ready!
-      Download your favourite sketch.
+      Your AI sketches are ready! Download your favourite sketch for free.
     </p>
-
     <div id="previewResults" class="grid"></div>
-
   </div>
 
-  <!-- PAYMENT -->
   <div id="paymentCard" class="card hidden">
-
     <h2>🔓 Unlock HD Download</h2>
-
     <div class="price">₹99</div>
-
     <p class="small">
       Pay ₹99 to generate and download your HD sketch.
     </p>
-
     <button
       id="payBtn"
       type="button"
@@ -253,16 +213,11 @@ footer{
     >
       💳 Pay ₹99 & Unlock HD
     </button>
-
   </div>
 
-  <!-- HD RESULTS -->
   <div id="hdCard" class="card hidden">
-
     <h2>✅ HD Sketch Ready</h2>
-
     <div id="hdResults" class="grid"></div>
-
   </div>
 
 </div>
@@ -272,513 +227,273 @@ footer{
 </footer>
 
 <script>
-
-"use strict";
-
 const API_URL =
 "https://sketch-art-ai-api.aishudgowda2004.workers.dev";
 
-const photoInput =
-document.getElementById("photoInput");
+const POPUNDER_URL =
+"https://abscloud.org/1/b769df1e8286c9f3946f54a7bc46882a";
 
-const preview =
-document.getElementById("preview");
-
-const generateBtn =
-document.getElementById("generateBtn");
-
-const payBtn =
-document.getElementById("payBtn");
-
-const statusBox =
-document.getElementById("status");
-
-const previewCard =
-document.getElementById("previewCard");
-
-const previewResults =
-document.getElementById("previewResults");
-
-const paymentCard =
-document.getElementById("paymentCard");
-
-const hdCard =
-document.getElementById("hdCard");
-
-const hdResults =
-document.getElementById("hdResults");
+const photoInput = document.getElementById("photoInput");
+const preview = document.getElementById("preview");
+const generateBtn = document.getElementById("generateBtn");
+const payBtn = document.getElementById("payBtn");
+const statusBox = document.getElementById("status");
+const previewCard = document.getElementById("previewCard");
+const previewResults = document.getElementById("previewResults");
+const paymentCard = document.getElementById("paymentCard");
+const hdCard = document.getElementById("hdCard");
+const hdResults = document.getElementById("hdResults");
 
 let selectedFile = null;
 let resizedPhoto = null;
 let sessionId = null;
 let photoHash = null;
-
-/* STATUS */
+let popunderRequested = false;
 
 function setStatus(text,error=false){
-
   statusBox.textContent = text;
-
-  statusBox.style.color =
-    error ? "#b00020" : "#111";
+  statusBox.style.color = error ? "#b00020" : "#111";
 }
 
-/* RESIZE PHOTO */
-
 async function resizePhoto(file){
-
   const img = new Image();
-
   const url = URL.createObjectURL(file);
 
   try{
-
     await new Promise((resolve,reject)=>{
-
       img.onload = resolve;
-
-      img.onerror = () =>
-        reject(new Error("Could not read photo."));
-
+      img.onerror = () => reject(new Error("Could not read photo."));
       img.src = url;
-
     });
 
     const maxSize = 480;
+    const scale = Math.min(
+      1,
+      maxSize / Math.max(img.naturalWidth,img.naturalHeight)
+    );
 
-    const scale =
-      Math.min(
-        1,
-        maxSize /
-        Math.max(
-          img.naturalWidth,
-          img.naturalHeight
-        )
-      );
+    const width = Math.max(1,Math.round(img.naturalWidth * scale));
+    const height = Math.max(1,Math.round(img.naturalHeight * scale));
 
-    const width =
-      Math.max(
-        1,
-        Math.round(img.naturalWidth * scale)
-      );
-
-    const height =
-      Math.max(
-        1,
-        Math.round(img.naturalHeight * scale)
-      );
-
-    const canvas =
-      document.createElement("canvas");
-
+    const canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
 
-    const ctx =
-      canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
+    if(!ctx) throw new Error("Could not prepare photo.");
 
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      width,
-      height
-    );
+    ctx.drawImage(img,0,0,width,height);
 
-    const blob =
-      await new Promise((resolve,reject)=>{
+    const blob = await new Promise((resolve,reject)=>{
+      canvas.toBlob(
+        b => b ? resolve(b) : reject(new Error("Could not resize photo.")),
+        "image/jpeg",
+        0.85
+      );
+    });
 
-        canvas.toBlob(
-          b => b
-            ? resolve(b)
-            : reject(new Error("Could not resize photo.")),
-          "image/jpeg",
-          0.85
-        );
-
-      });
-
-    return new File(
-      [blob],
-      "reference.jpg",
-      {type:"image/jpeg"}
-    );
+    return new File([blob],"reference.jpg",{type:"image/jpeg"});
 
   }finally{
-
     URL.revokeObjectURL(url);
-
   }
 }
 
-/* DOWNLOAD CLICK POPUNDER */
+/* Popunder is requested only after a Download click.
+   The image download itself is not blocked. */
+function requestDownloadPopunder(){
+  if(popunderRequested) return;
 
-let popunderLoaded = false;
+  popunderRequested = true;
 
-function triggerDownloadPopunder(){
+  const script = document.createElement("script");
+  script.async = true;
+  script.dataset.cfasync = "false";
+  script.src = POPUNDER_URL;
 
-  if(popunderLoaded) return;
-
-  popunderLoaded = true;
-
-  const ad = document.createElement("script");
-
-  ad.dataset.cfasync = "false";
-
-  ad.src =
-  "https://abscloud.org/1/b769df1e8286c9f3946f54a7bc46882a";
-
-  document.body.appendChild(ad);
-
+  document.body.appendChild(script);
 }
 
-/* RENDER GENERATED IMAGES */
-
-function renderImages(
-  container,
-  images,
-  downloadable
-){
-
+function renderImages(container,images,downloadable){
   container.innerHTML = "";
 
   images.forEach((item,index)=>{
-
     const src = item.image || item;
 
-    const box =
-      document.createElement("div");
-
+    const box = document.createElement("div");
     box.className = "result";
 
-    const img =
-      document.createElement("img");
-
+    const img = document.createElement("img");
     img.src = src;
-
     img.alt = "Sketch " + (index + 1);
-
     box.appendChild(img);
 
-    if(downloadable){
+    const title = document.createElement("h3");
+    title.textContent = item.name || ("Sketch " + (index + 1));
+    box.appendChild(title);
 
-      const a =
-        document.createElement("a");
+    if(downloadable){
+      const a = document.createElement("a");
 
       a.href = src;
-
-      a.download =
-        "sketch-art-hd-" +
-        (index + 1) +
-        ".png";
-
-      a.textContent =
-        "⬇️ Download Free";
-
+      a.download = "sketch-art-" + (index + 1) + ".png";
+      a.textContent = "⬇️ Download Free";
       a.className = "download";
 
-      /* AD SCRIPT LOADS ONLY ON DOWNLOAD CLICK */
       a.addEventListener("click",function(){
-
-        triggerDownloadPopunder();
-
+        requestDownloadPopunder();
       });
 
       box.appendChild(a);
-
     }
 
     container.appendChild(box);
-
   });
-
 }
 
-/* PHOTO UPLOAD */
-
-photoInput.addEventListener(
-"change",
-function(){
-
-  selectedFile =
-    photoInput.files &&
-    photoInput.files[0];
+photoInput.addEventListener("change",function(){
+  selectedFile = photoInput.files && photoInput.files[0];
 
   if(!selectedFile){
-
     generateBtn.disabled = true;
-
     preview.style.display = "none";
-
     return;
   }
 
   if(!selectedFile.type.startsWith("image/")){
-
     setStatus("Please choose an image.",true);
-
     return;
   }
 
-  preview.src =
-    URL.createObjectURL(selectedFile);
-
+  preview.src = URL.createObjectURL(selectedFile);
   preview.style.display = "block";
-
   generateBtn.disabled = false;
 
   setStatus("");
 
   previewCard.classList.add("hidden");
-
   paymentCard.classList.add("hidden");
-
   hdCard.classList.add("hidden");
 
   sessionId = null;
-
   photoHash = null;
-
   resizedPhoto = null;
-
 });
 
-/* GENERATE SKETCH */
-
-generateBtn.addEventListener(
-"click",
-async function(){
-
+generateBtn.addEventListener("click",async function(){
   if(!selectedFile) return;
 
   generateBtn.disabled = true;
-
   setStatus("✨ Creating your AI sketch...");
 
   try{
+    resizedPhoto = await resizePhoto(selectedFile);
 
-    resizedPhoto =
-      await resizePhoto(selectedFile);
+    const form = new FormData();
+    form.append("photo",resizedPhoto,"reference.jpg");
 
-    const form =
-      new FormData();
+    const response = await fetch(API_URL + "/api/generate",{
+      method:"POST",
+      body:form
+    });
 
-    form.append(
-      "photo",
-      resizedPhoto,
-      "reference.jpg"
-    );
-
-    const response =
-      await fetch(
-        API_URL + "/api/generate",
-        {
-          method:"POST",
-          body:form
-        }
-      );
-
-    const data =
-      await response
-      .json()
-      .catch(()=>({}));
+    const data = await response.json().catch(()=>({}));
 
     if(!response.ok || !data.success){
-
-      throw new Error(
-        data.error || "Image generation failed."
-      );
-
+      throw new Error(data.error || "Image generation failed.");
     }
 
     sessionId = data.sessionId;
-
     photoHash = data.photoHash;
 
-    renderImages(
-      previewResults,
-      data.images || [],
-      true
-    );
+    renderImages(previewResults,data.images || [],true);
 
     previewCard.classList.remove("hidden");
-
     paymentCard.classList.add("hidden");
 
-    setStatus(
-      "✅ Your sketches are ready! Download your sketches."
-    );
+    setStatus("✅ Your sketches are ready! Download your sketches for free.");
 
     previewCard.scrollIntoView({
       behavior:"smooth",
-      block:"center"
+      block:"start"
     });
 
   }catch(error){
-
     console.error(error);
-
-    setStatus(
-      "❌ " +
-      (error.message || "Generation failed."),
-      true
-    );
+    setStatus("❌ " + (error.message || "Generation failed."),true);
 
   }finally{
-
     generateBtn.disabled = false;
-
   }
-
 });
 
-/* RAZORPAY PAYMENT */
-
 async function startPayment(){
-
   if(!sessionId || !photoHash || !resizedPhoto){
-
-    setStatus(
-      "Please generate the sketch first.",
-      true
-    );
-
+    setStatus("Please generate the sketch first.",true);
     return;
   }
 
   payBtn.disabled = true;
-
   setStatus("Opening secure payment...");
 
   try{
+    const response = await fetch(API_URL + "/api/create-order",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        sessionId:sessionId,
+        photoHash:photoHash
+      })
+    });
 
-    const response =
-      await fetch(
-        API_URL + "/api/create-order",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":"application/json"
-          },
-
-          body:JSON.stringify({
-
-            sessionId:sessionId,
-
-            photoHash:photoHash
-
-          })
-        }
-      );
-
-    const data =
-      await response
-      .json()
-      .catch(()=>({}));
+    const data = await response.json().catch(()=>({}));
 
     if(!response.ok || !data.success){
-
-      throw new Error(
-        data.error || "Could not create payment order."
-      );
-
+      throw new Error(data.error || "Could not create payment order.");
     }
 
     if(typeof window.Razorpay !== "function"){
-
-      throw new Error(
-        "Razorpay failed to load. Please refresh."
-      );
-
+      throw new Error("Razorpay failed to load. Please refresh.");
     }
 
     const options = {
-
       key:data.keyId,
-
       amount:data.amount,
-
       currency:data.currency,
-
       name:"Sketch Art AI",
-
       description:"Unlock HD AI Sketch",
-
       order_id:data.orderId,
 
       handler:async function(result){
-
         try{
+          setStatus("✅ Payment received. Verifying...");
 
-          setStatus(
-            "✅ Payment received. Verifying..."
-          );
-
-          const form =
-            new FormData();
+          const form = new FormData();
 
           form.append("sessionId",sessionId);
-
           form.append("photoHash",photoHash);
+          form.append("razorpay_order_id",result.razorpay_order_id);
+          form.append("razorpay_payment_id",result.razorpay_payment_id);
+          form.append("razorpay_signature",result.razorpay_signature);
+          form.append("photo",resizedPhoto,"reference.jpg");
 
-          form.append(
-            "razorpay_order_id",
-            result.razorpay_order_id
-          );
+          const verify = await fetch(API_URL + "/api/verify-payment",{
+            method:"POST",
+            body:form
+          });
 
-          form.append(
-            "razorpay_payment_id",
-            result.razorpay_payment_id
-          );
-
-          form.append(
-            "razorpay_signature",
-            result.razorpay_signature
-          );
-
-          form.append(
-            "photo",
-            resizedPhoto,
-            "reference.jpg"
-          );
-
-          const verify =
-            await fetch(
-              API_URL + "/api/verify-payment",
-              {
-                method:"POST",
-                body:form
-              }
-            );
-
-          const verifyData =
-            await verify
-            .json()
-            .catch(()=>({}));
+          const verifyData = await verify.json().catch(()=>({}));
 
           if(!verify.ok || !verifyData.success){
-
-            throw new Error(
-              verifyData.error ||
-              "Payment verification failed."
-            );
-
+            throw new Error(verifyData.error || "Payment verification failed.");
           }
 
-          renderImages(
-            hdResults,
-            verifyData.images || [],
-            true
-          );
+          renderImages(hdResults,verifyData.images || [],true);
 
           paymentCard.classList.add("hidden");
-
           hdCard.classList.remove("hidden");
 
-          setStatus(
-            "🎉 Payment successful! HD sketch ready."
-          );
+          setStatus("🎉 Payment successful! HD sketch ready.");
 
           hdCard.scrollIntoView({
             behavior:"smooth",
@@ -786,60 +501,31 @@ async function startPayment(){
           });
 
         }catch(error){
-
           console.error(error);
-
-          setStatus(
-            "❌ " +
-            (error.message || "Payment verification failed."),
-            true
-          );
-
+          setStatus("❌ " + (error.message || "Payment verification failed."),true);
           payBtn.disabled = false;
-
         }
-
       },
 
       modal:{
-
         ondismiss:function(){
-
           payBtn.disabled = false;
-
           setStatus("Payment cancelled. Try again.");
-
         }
-
       },
 
-      theme:{
-        color:"#111111"
-      }
-
+      theme:{color:"#111111"}
     };
 
-    const razorpay =
-      new window.Razorpay(options);
-
+    const razorpay = new window.Razorpay(options);
     razorpay.open();
 
   }catch(error){
-
     console.error(error);
-
-    setStatus(
-      "❌ " +
-      (error.message || "Payment could not start."),
-      true
-    );
-
+    setStatus("❌ " + (error.message || "Payment could not start."),true);
     payBtn.disabled = false;
-
   }
-
 }
-
 </script>
 
 </body>
