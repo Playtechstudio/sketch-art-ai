@@ -1,48 +1,135 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Contact Playtech Studio about Sketch Art AI.">
-<title>Contact Us | Sketch Art AI</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f4f4f4;color:#171717;line-height:1.65}
-header{background:#111;color:#fff;text-align:center;padding:25px 16px}
-header h1{margin:0 0 6px}
-header p{margin:0;color:#ccc}
-main{max-width:850px;margin:28px auto;padding:0 16px}
-article{background:#fff;border-radius:16px;padding:26px;margin-bottom:18px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-h2{margin-top:0}
-a{color:#222}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;padding:16px}
-nav a{color:#fff}
-footer{text-align:center;color:#666;padding:22px;font-size:13px}
-footer a{color:#333;margin:0 8px}
-@media(max-width:600px){article{padding:20px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Playtech Studio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: white;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      padding: 35px;
+      text-align: center;
+      background: #151d32;
+      border: 1px solid #293650;
+      border-radius: 18px;
+    }
+
+    h1 {
+      color: #55c7ff;
+    }
+
+    p {
+      color: #c5cee0;
+      line-height: 1.6;
+    }
+
+    .email {
+      margin: 25px 0;
+      padding: 15px;
+      background: #202d47;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 9px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .gmail {
+      background: #1688e8;
+      color: white;
+    }
+
+    .copy {
+      background: #263754;
+      color: white;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      color: #55c7ff;
+      text-decoration: none;
+    }
+
+    #message {
+      color: #83e6a5;
+    }
+  </style>
 </head>
+
 <body>
-<header>
-  <h1>Sketch Art AI</h1>
-  <p>By Playtech Studio</p>
-  <nav aria-label="Main navigation">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact Us</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
-  </nav>
-</header>
-<main>
+  <main class="container">
+    <h1>Contact Us</h1>
 
-<article>
-<h2>Contact Us</h2>
-<p>Have a question, feedback, or need help with Sketch Art AI? Contact Playtech Studio using the email below.</p>
-<p><strong>Email:</strong> <a href="mailto:contactplaytechstudio@gmail.com">contactplaytechstudio@gmail.com</a></p>
-<p>Please include a clear description of your question. For payment-related queries, include the payment date and Razorpay payment reference if available. Do not email passwords, card numbers, or other sensitive payment details.</p>
-</article>
+    <p>
+      Have a question or need support?
+      Contact Playtech Studio. We are happy to help.
+    </p>
 
-</main>
-<footer>© 2026 Sketch Art AI | Playtech Studio</footer>
+    <div class="email">
+      contactplaytechstudio@gmail.com
+    </div>
+
+    <a
+      class="button gmail"
+      href="https://mail.google.com/mail/?view=cm&fs=1&to=contactplaytechstudio%40gmail.com"
+      target="_blank"
+      rel="noopener noreferrer">
+      Open Gmail
+    </a>
+
+    <button class="button copy" onclick="copyEmail()">
+      Copy Email Address
+    </button>
+
+    <p id="message" aria-live="polite"></p>
+
+    <a class="back" href="index.html">
+      ← Back to Sketch Art AI
+    </a>
+  </main>
+
+  <script>
+    async function copyEmail() {
+      const email = "contactplaytechstudio@gmail.com";
+      const message = document.getElementById("message");
+
+      try {
+        await navigator.clipboard.writeText(email);
+        message.textContent = "Email copied successfully!";
+      } catch (error) {
+        message.textContent = "Please copy manually: " + email;
+      }
+    }
+  </script>
 </body>
 </html>
