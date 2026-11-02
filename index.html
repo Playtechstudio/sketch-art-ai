@@ -6,29 +6,190 @@
 <meta name="description" content="Turn your photo into professional AI sketch art - Sketch Art AI by Playtech Studio">
 <meta name="google-adsense-account" content="ca-pub-8017343732093207">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8017343732093207" crossorigin="anonymous"></script>
-<title>Sketch Art AI - Turn Photo to Sketch</title>
+<title>Sketch Art AI</title>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <style>
 * { box-sizing: border-box; }
-body { margin:0; font-family:Arial,sans-serif; background:#f4f4f4; color:#111; }
-header { background:#111; color:white; text-align:center; padding:24px 15px; }
-.container { max-width:900px; margin:28px auto; padding:0 16px; }
-.card { background:white; border-radius:18px; padding:24px; margin-bottom:20px; box-shadow:0 4px 20px rgba(0,0,0,.08); }
-.upload { text-align:center; border:2px dashed #aaa; border-radius:15px; padding:22px; }
-.btn { width:100%; padding:15px; border:0; border-radius:12px; background:#111; color:white; font-size:17px; font-weight:700; cursor:pointer; margin-top:15px; }
-footer { text-align:center; padding:30px; color:#777; font-size:13px; }
-footer a { color:#111; margin:0 8px; text-decoration:none; font-weight:700; }
-/* ... rest same as yours ... */
+body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; color: #111; }
+header { background: #111; color: white; text-align: center; padding: 24px 15px; }
+header h1 { margin: 0 0 8px; }
+header p { margin: 0; color: #ccc; }
+.container { max-width: 900px; margin: 28px auto; padding: 0 16px; }
+.card { background: white; border-radius: 18px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+.upload { text-align: center; border: 2px dashed #aaa; border-radius: 15px; padding: 22px; }
+.upload input { width: 100%; padding: 12px; }
+.preview { display: none; width: 100%; max-width: 280px; max-height: 280px; object-fit: contain; margin: 18px auto; border-radius: 12px; }
+.btn { width: 100%; padding: 15px; border: 0; border-radius: 12px; background: #111; color: white; font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 15px; }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.status { text-align: center; margin: 18px 0; font-weight: 700; min-height: 24px; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.result { background: #f7f7f7; border-radius: 14px; padding: 10px; }
+.result img { width: 100%; display: block; border-radius: 10px; }
+.price { text-align: center; font-size: 30px; font-weight: 800; }
+.small { text-align: center; color: #666; font-size: 14px; }
+.hidden { display: none; }
+.download { display: block; text-align: center; margin-top: 10px; padding: 10px; font-weight: 700; color: #111; text-decoration: none; background: #eee; border-radius: 8px; }
+footer { text-align: center; padding: 30px; color: #777; font-size: 13px; }
+footer a { color: #111; margin: 0 8px; text-decoration: none; font-weight: bold; }
+@media(max-width:600px) { .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<header><h1>✏️ Sketch Art AI</h1><p>Turn your photo into professional AI sketch art</p></header>
+<header>
+  <h1>✏️ Sketch Art AI</h1>
+  <p>Turn your photo into professional AI sketch art</p>
+  <p>PLAYTECH STUDIO</p>
+</header>
 <div class="container">
-<!-- YOUR REST CONTENT SAME -->
+  <div class="card">
+    <div class="upload">
+      <h2>Upload your photo</h2>
+      <p>Choose one clear face photo</p>
+      <input id="photoInput" type="file" accept="image/*">
+      <img id="preview" class="preview" alt="Photo preview">
+    </div>
+    <button id="generateBtn" class="btn" disabled>✨ Generate Sketch</button>
+    <div id="status" class="status"></div>
+  </div>
+  <div id="previewCard" class="card hidden">
+    <h2>🎨 Your AI Sketch</h2>
+    <p class="small">Your AI sketches are ready!</p>
+    <div id="previewResults" class="grid"></div>
+  </div>
+  <div id="paymentCard" class="card hidden">
+    <h2>🔓 Unlock HD Download</h2>
+    <div class="price">₹99</div>
+    <p class="small">Pay ₹99 to generate and download your HD sketches.</p>
+    <button id="payBtn" type="button" class="btn">💳 Pay ₹99 & Unlock HD</button>
+  </div>
+  <div id="hdCard" class="card hidden">
+    <h2>✅ HD Sketch Ready</h2>
+    <div id="hdResults" class="grid"></div>
+  </div>
 </div>
 <footer>
-<a href="/privacy.html">Privacy Policy</a> | <a href="/about.html">About Us</a> | <a href="/contact.html">Contact</a><br><br>© 2026 Sketch Art AI | Playtech Studio
+  <a href="privacy.html">Privacy Policy</a> | <a href="about.html">About Us</a> | <a href="contact.html">Contact Us</a><br><br>
+  © 2026 Sketch Art AI | Playtech Studio
 </footer>
-<!-- YOUR SCRIPT SAME -->
+<script>
+"use strict";
+const API_URL = "https://sketch-art-ai-api.aishudgowda2004.workers.dev";
+const photoInput = document.getElementById("photoInput");
+const preview = document.getElementById("preview");
+const generateBtn = document.getElementById("generateBtn");
+const payBtn = document.getElementById("payBtn");
+const statusBox = document.getElementById("status");
+const previewCard = document.getElementById("previewCard");
+const previewResults = document.getElementById("previewResults");
+const paymentCard = document.getElementById("paymentCard");
+const hdCard = document.getElementById("hdCard");
+const hdResults = document.getElementById("hdResults");
+let selectedFile = null;
+let resizedPhoto = null;
+let sessionId = null;
+let photoHash = null;
+let previewUrl = null;
+function setStatus(message, error = false) {
+  statusBox.textContent = message;
+  statusBox.style.color = error ? "#b00020" : "#111";
+}
+async function resizePhoto(file) {
+  const img = new Image();
+  const url = URL.createObjectURL(file);
+  try {
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = () => { reject(new Error("Could not read photo.")); };
+      img.src = url;
+    });
+    const maxSize = 480;
+    const scale = Math.min(1, maxSize / Math.max(img.naturalWidth, img.naturalHeight));
+    const width = Math.max(1, Math.round(img.naturalWidth * scale));
+    const height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width; canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) { throw new Error("Canvas is not supported."); }
+    ctx.drawImage(img, 0, 0, width, height);
+    const blob = await new Promise((resolve, reject) => {
+      canvas.toBlob(blob => { if (blob) { resolve(blob); } else { reject(new Error("Could not resize photo.")); } }, "image/jpeg", 0.85);
+    });
+    return new File([blob], "reference.jpg", { type: "image/jpeg" });
+  } finally { URL.revokeObjectURL(url); }
+}
+function renderImages(container, images, downloadable) {
+  container.innerHTML = "";
+  images.forEach((item, index) => {
+    const src = item.image || item;
+    if (typeof src !== "string") { return; }
+    const box = document.createElement("div"); box.className = "result";
+    const img = document.createElement("img"); img.src = src; img.alt = "Sketch " + (index + 1);
+    box.appendChild(img);
+    if (downloadable) {
+      const link = document.createElement("a"); link.href = src; link.download = "sketch-art-" + (index + 1) + ".png"; link.textContent = "⬇️ Download"; link.className = "download"; box.appendChild(link);
+    }
+    container.appendChild(box);
+  });
+}
+photoInput.addEventListener("change", function() {
+  selectedFile = photoInput.files && photoInput.files[0];
+  if (!selectedFile) { generateBtn.disabled = true; preview.style.display = "none"; return; }
+  if (!selectedFile.type.startsWith("image/")) { setStatus("Please choose a valid image.", true); generateBtn.disabled = true; return; }
+  if (previewUrl) { URL.revokeObjectURL(previewUrl); }
+  previewUrl = URL.createObjectURL(selectedFile);
+  preview.src = previewUrl; preview.style.display = "block"; generateBtn.disabled = false; setStatus("");
+  previewCard.classList.add("hidden"); paymentCard.classList.add("hidden"); hdCard.classList.add("hidden");
+  previewResults.innerHTML = ""; hdResults.innerHTML = ""; sessionId = null; photoHash = null; resizedPhoto = null;
+});
+generateBtn.addEventListener("click", async function() {
+  if (!selectedFile) { return; }
+  generateBtn.disabled = true; setStatus("✨ Creating your AI sketches... Please wait.");
+  try {
+    resizedPhoto = await resizePhoto(selectedFile);
+    const form = new FormData(); form.append("photo", resizedPhoto, "reference.jpg");
+    const response = await fetch(API_URL + "/api/generate", { method: "POST", body: form });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.success) { throw new Error(data.error || "Image generation failed."); }
+    sessionId = data.sessionId; photoHash = data.photoHash;
+    renderImages(previewResults, data.images || [], false);
+    previewCard.classList.remove("hidden"); paymentCard.classList.add("hidden"); hdCard.classList.add("hidden");
+    setStatus("✅ Your AI sketches are ready!");
+    previewCard.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (error) { console.error(error); setStatus("❌ " + (error.message || "Generation failed."), true); }
+  finally { generateBtn.disabled = false; }
+});
+payBtn.addEventListener("click", startPayment);
+async function startPayment() {
+  if (!sessionId || !photoHash || !resizedPhoto) { setStatus("Please generate your sketches first.", true); return; }
+  payBtn.disabled = true; setStatus("Opening secure payment...");
+  try {
+    const response = await fetch(API_URL + "/api/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sessionId: sessionId, photoHash: photoHash }) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.success) { throw new Error(data.error || "Could not create payment order."); }
+    if (typeof window.Razorpay !== "function") { throw new Error("Razorpay failed to load. Please refresh."); }
+    const options = {
+      key: data.keyId, amount: data.amount, currency: data.currency, name: "Sketch Art AI", description: "Unlock HD AI Sketches", order_id: data.orderId,
+      handler: async function(result) {
+        try {
+          setStatus("Payment received. Verifying payment...");
+          const form = new FormData(); form.append("sessionId", sessionId); form.append("photoHash", photoHash);
+          form.append("razorpay_order_id", result.razorpay_order_id); form.append("razorpay_payment_id", result.razorpay_payment_id); form.append("razorpay_signature", result.razorpay_signature);
+          form.append("photo", resizedPhoto, "reference.jpg");
+          const verifyResponse = await fetch(API_URL + "/api/verify-payment", { method: "POST", body: form });
+          const verifyData = await verifyResponse.json().catch(() => ({}));
+          if (!verifyResponse.ok || !verifyData.success) { throw new Error(verifyData.error || "Payment verification failed."); }
+          renderImages(hdResults, verifyData.images || [], true);
+          paymentCard.classList.add("hidden"); hdCard.classList.remove("hidden");
+          setStatus("🎉 Payment successful! Your HD sketches are ready.");
+          hdCard.scrollIntoView({ behavior: "smooth", block: "start" });
+        } catch (error) { console.error(error); setStatus("❌ " + (error.message || "Payment verification failed."), true); payBtn.disabled = false; }
+      },
+      modal: { ondismiss: function() { payBtn.disabled = false; setStatus("Payment cancelled. You can try again."); } },
+      theme: { color: "#111111" }
+    };
+    const razorpay = new window.Razorpay(options); razorpay.open();
+  } catch (error) { console.error(error); setStatus("❌ " + (error.message || "Payment could not start."), true); payBtn.disabled = false; }
+}
+</script>
 </body>
 </html>
